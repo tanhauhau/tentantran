@@ -51,6 +51,14 @@ bot.on('message', (ctx) => {
       .then(values => getExpressFileLink(values[values.length - 1]))
       .then(publicUrl => ocr(publicUrl));
   } else if (ctx.message.text) {
+    if (ctx.message.text === '/toggle') {
+      if (toggle === 1) {
+        toggle = 0;
+      } else {
+        toggle = 1;
+      }
+      ctx.reply('Bad translation toggled!');
+    }
     promise = promise.then(() => ctx.message.text);
   }
 
@@ -68,14 +76,6 @@ bot.on('message', (ctx) => {
     .then((sentence) => {
       ctx.reply(`Translated to ${languageName}: ${sentence}`);
     });
-});
-bot.command('toggle', (ctx) => {
-  if (toggle === 1) {
-    toggle = 0;
-  } else {
-    toggle = 1;
-  }
-  ctx.reply('Bad translation toggled!');
 });
 bot.startPolling();
 
