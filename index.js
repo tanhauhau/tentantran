@@ -58,8 +58,9 @@ bot.on('message', (ctx) => {
         toggle = 1;
       }
       ctx.reply('Bad translation toggled!');
+    } else {
+      promise = promise.then(() => ctx.message.text);
     }
-    promise = promise.then(() => ctx.message.text);
   }
 
   const { key, languageName } = getRandomLang();
