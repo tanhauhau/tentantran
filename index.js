@@ -83,7 +83,7 @@ bot.on('message', (ctx) => {
       return sentence;
     })
     .then((sentence) => {
-      if (languageName !== 'en') {
+      if (key !== 'en') {
         ctx.reply(`I dont speak english, but I do know ${languageName}: ${sentence}`);
       } else {
         ctx.reply(`Here's your translation: ${sentence}`);
