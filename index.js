@@ -75,7 +75,12 @@ bot.on('message', (ctx) => {
       });
       return returnVal;
     })
-    .then(sentence => sillyfier(sentence))
+    .then((sentence) => {
+      if (toggle) {
+        return sillyfier(sentence);
+      }
+      return sentence;
+    })
     .then((sentence) => {
       if (languageName !== 'en') {
         ctx.reply(`I dont speak english, but I do know ${languageName}: ${sentence}`);
