@@ -1,4 +1,5 @@
 const Telegraf = require('telegraf');
+const ocr = require('./utils/ocr');
 
 const tempBotToken = process.env.BOT_TOKEN;
 

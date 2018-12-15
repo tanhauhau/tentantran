@@ -10,3 +10,6 @@ git remote set-url --add --push origin https://github.com/tanhauhau/tentantran.g
 git push origin master
 ```
 
+# .env
+
+- GOOGLE_API_KEY
