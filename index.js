@@ -7,11 +7,11 @@ const Telegram = require('telegraf/telegram');
 const { initExpressServer, getExpressFileLink } = require('./utils/file');
 const ocr = require('./utils/ocr');
 const translate = require('./utils/translate');
+const sillyfier = require('./utils/sillyfier');
 
 initExpressServer();
 
 const tempBotToken = process.env.BOT_TOKEN;
-
 
 console.log('telegram bot started');
 
@@ -43,7 +43,11 @@ bot.on('message', (ctx) => {
         res.forEach((item) => {
           returnVal += `${item.translatedText}\n`;
         });
-        ctx.reply(`Translated: ${returnVal}`);
+        return returnVal;
+      })
+      .then(sentence => sillyfier(sentence))
+      .then((sentence) => {
+        ctx.reply(`Translated: ${sentence}`);
       });
   } else if (ctx.message.text) {
     translate(encodeURIComponent(ctx.message.text), 'en').then((res) => {
