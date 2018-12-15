@@ -10,6 +10,7 @@ const ocr = require('./utils/ocr');
 const translate = require('./utils/translate');
 const sillyfier = require('./utils/sillyfier');
 const languages = require('./utils/languages');
+const replies = require('./utils/replies');
 
 initExpressServer();
 
@@ -28,6 +29,11 @@ if (tempBotToken) {
 bot.start(ctx => ctx.reply('Hi! im a test bot!'));
 bot.help(ctx => ctx.reply('Send me some image or text to translate!'));
 bot.on('message', (ctx) => {
+  if (Math.random() < 0.5) {
+    ctx.reply(_.sample(replies.lazy));
+    return;
+  }
+
   const promise = Promise.resolve();
 
   if (ctx.message.photo) {
