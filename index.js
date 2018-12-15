@@ -50,13 +50,18 @@ bot.on('message', (ctx) => {
         ctx.reply(`Translated: ${sentence}`);
       });
   } else if (ctx.message.text) {
-    translate(encodeURIComponent(ctx.message.text), 'en').then((res) => {
-      let returnVal = '';
-      res.forEach((item) => {
-        returnVal += `${item.translatedText}\n`;
+    translate(encodeURIComponent(ctx.message.text), 'en')
+      .then((res) => {
+        let returnVal = '';
+        res.forEach((item) => {
+          returnVal += `${item.translatedText}\n`;
+        });
+        return returnVal;
+      })
+      .then(sentence => sillyfier(sentence))
+      .then((sentence) => {
+        ctx.reply(`Translated: ${sentence}`);
       });
-      ctx.reply(`Translated: ${returnVal}`);
-    });
   }
 });
 bot.hears('hi', ctx => ctx.reply('Hey there'));
