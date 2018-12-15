@@ -8,6 +8,8 @@ const tempBotToken = process.env.BOT_TOKEN;
 
 require('dotenv').load();
 
+console.log('telegram bot started');
+
 let bot;
 let telegram;
 if (tempBotToken) {
