@@ -2,7 +2,7 @@
 const Telegraf = require('telegraf');
 // communicate with telegram server
 const Telegram = require('telegraf/telegram');
-const { initExpressServer } = require('./utils/file');
+const { initExpressServer, getExpressFileLink } = require('./utils/file');
 const ocr = require('./utils/ocr');
 
 initExpressServer();
@@ -33,12 +33,10 @@ bot.on('message', (ctx) => {
       const photo = photos[i];
       promises.push(telegram.getFileLink(photo.file_id));
     }
-    Promise.all(promises).then((values) => {
-      // eslint-disable-next-line block-spacing
-      values.forEach((value) => {
-        console.log(value);
-      });
-    });
+    Promise.all(promises)
+      .then(values => getExpressFileLink(values[values.length - 1]))
+      .then(publicUrl => ocr(publicUrl))
+      .then(text => console.log('text:', text));
   }
   // telegram.getFile(ctx.)
 });
