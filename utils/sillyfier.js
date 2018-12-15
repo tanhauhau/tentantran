@@ -32,7 +32,7 @@ function getAntonym(word) {
 function antonymify(sentence) {
   return findAdjectives(sentence)
     .then((adjectives) => {
-      const sampleAdjectives = _.sampleSize(adjectives, _.random(adjectives.length));
+      const sampleAdjectives = adjectives; // _.sampleSize(adjectives, _.random(adjectives.length));
       return Promise.all(sampleAdjectives.map(adjective => getAntonym(adjective)));
     })
     .then(replacers => replacers.reduce((result, replacer) => result.replace(replacer.from, replacer.to), sentence));
