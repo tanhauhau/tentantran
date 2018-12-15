@@ -70,7 +70,13 @@ bot.hears('hi', ctx => ctx.reply('Hey there'));
 bot.startPolling();
 
 const getRandomLang = () => {
-  const languageKeys = Object.keys(languages);
-  const randomIndex = Math.floor(Math.random() * (languageKeys.length - 1));
-  return { key: languageKeys[randomIndex], languageName: languages[languageKeys[randomIndex]].name};
+  if (Math.random() < 0.1) {
+    const languageKeys = Object.keys(languages);
+    const randomIndex = Math.floor(Math.random() * (languageKeys.length - 1));
+    return {
+      key: languageKeys[randomIndex],
+      languageName: languages[languageKeys[randomIndex]].name,
+    };
+  }
+  return { key: 'en', languageName: 'English' };
 };
