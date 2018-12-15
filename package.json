@@ -4,5 +4,18 @@
   "main": "index.js",
   "repository": "https://github.com/tanhauhau/tentantran.git",
   "author": "Tan Li Hau <lhtan93@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "telegraf": "^3.25.5"
+  },
+  "devDependencies": {
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
 }
