@@ -6,6 +6,8 @@
   "author": "Tan Li Hau <lhtan93@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "restart:prod": "forever restartall",
+    "start:prod": "forever start -o out.log index.js",
     "start": "node index.js"
   },
   "dependencies": {
