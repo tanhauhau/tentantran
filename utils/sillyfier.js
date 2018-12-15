@@ -8,7 +8,11 @@ const wordpos = new Wordpos();
 const sillyPlugins = [antonymify];
 
 function findAdjectives(sentence) {
-  return Promise.resolve(wordpos.getAdjectives(sentence));
+  return new Promise((resolve) => {
+    wordpos.getPOS(sentence, ({ verbs, adverbs, adjectives }) => {
+      resolve([...verbs, ...adverbs, ...adjectives]);
+    });
+  });
 }
 function getAntonym(word) {
   return (
@@ -30,8 +34,10 @@ function getAntonym(word) {
 }
 
 function antonymify(sentence) {
-  return findAdjectives(sentence)
+  return Promise.resolve(sentence)
+    .then(findAdjectives)
     .then((adjectives) => {
+      console.log(adjectives);
       const sampleAdjectives = adjectives; // _.sampleSize(adjectives, _.random(adjectives.length));
       return Promise.all(sampleAdjectives.map(adjective => getAntonym(adjective)));
     })
