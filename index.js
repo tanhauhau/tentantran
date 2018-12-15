@@ -53,7 +53,6 @@ bot.on('message', (ctx) => {
 
   const { key, languageName } = getRandomLang();
   promise
-    .then(text => (console.log(text), text))
     .then(text => translate(encodeURIComponent(text), key))
     .then((res) => {
       let returnVal = '';
