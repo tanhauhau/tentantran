@@ -28,44 +28,37 @@ if (tempBotToken) {
 bot.start(ctx => ctx.reply('Hi! im a test bot!'));
 bot.help(ctx => ctx.reply('Send me some image or text to translate!'));
 bot.on('message', (ctx) => {
-  const promises = [];
+  const promise = Promise.resolve();
+
   if (ctx.message.photo) {
+    const promises = [];
     const photos = ctx.message.photo;
     for (let i = 0; i < photos.length; i += 1) {
       const photo = photos[i];
       promises.push(telegram.getFileLink(photo.file_id));
     }
-    Promise.all(promises)
+    promise
+      .then(() => Promise.all(promises))
       .then(values => getExpressFileLink(values[values.length - 1]))
-      .then(publicUrl => ocr(publicUrl))
-      .then(text => translate(encodeURIComponent(text), 'en'))
-      .then((res) => {
-        let returnVal = '';
-        res.forEach((item) => {
-          returnVal += `${item.translatedText}\n`;
-        });
-        return returnVal;
-      })
-      .then(sentence => sillyfier(sentence))
-      .then((sentence) => {
-        ctx.reply(`Translated: ${sentence}`);
-      });
+      .then(publicUrl => ocr(publicUrl));
   } else if (ctx.message.text) {
-    const { key, languageName } = getRandomLang();
-    translate(encodeURIComponent(ctx.message.text), key)
-      .then((res) => {
-        let returnVal = '';
-        res.forEach((item) => {
-          returnVal += `${item.translatedText}\n`;
-        });
-        return returnVal;
-      })
-      .then()
-      .then(sentence => sillyfier(sentence))
-      .then((sentence) => {
-        ctx.reply(`Translated to ${languageName}: ${sentence}`);
-      });
+    promise.then(() => ctx.message.text);
   }
+
+  const { key, languageName } = getRandomLang();
+  promise
+    .then(text => translate(encodeURIComponent(text), key))
+    .then((res) => {
+      let returnVal = '';
+      res.forEach((item) => {
+        returnVal += `${item.translatedText}\n`;
+      });
+      return returnVal;
+    })
+    .then(sentence => sillyfier(sentence))
+    .then((sentence) => {
+      ctx.reply(`Translated to ${languageName}: ${sentence}`);
+    });
 });
 bot.hears('hi', ctx => ctx.reply('Hey there'));
 bot.startPolling();
