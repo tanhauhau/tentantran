@@ -41,7 +41,7 @@ function antonymify(sentence) {
       const sampleAdjectives = adjectives; // _.sampleSize(adjectives, _.random(adjectives.length));
       return Promise.all(sampleAdjectives.map(adjective => getAntonym(adjective)));
     })
-    .then(replacers => replacers.reduce((result, replacer) => result.replace(replacer.from, replacer.to), sentence));
+     .then(replacers => replacers.reduce((result, replacer) => result.replace(replacer.from, replacer.to), sentence));
 }
 
 function sillyfier(sentence) {
