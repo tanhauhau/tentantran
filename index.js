@@ -29,12 +29,12 @@ if (tempBotToken) {
 bot.start(ctx => ctx.reply('Hi! im a test bot!'));
 bot.help(ctx => ctx.reply('Send me some image or text to translate!'));
 bot.on('message', (ctx) => {
-  if (Math.random() < 0.5) {
+  if (Math.random() < 0.15) {
     ctx.reply(_.sample(replies.lazy));
     return;
   }
 
-  const promise = Promise.resolve();
+  let promise = Promise.resolve();
 
   if (ctx.message.photo) {
     const promises = [];
@@ -43,16 +43,17 @@ bot.on('message', (ctx) => {
       const photo = photos[i];
       promises.push(telegram.getFileLink(photo.file_id));
     }
-    promise
+    promise = promise
       .then(() => Promise.all(promises))
       .then(values => getExpressFileLink(values[values.length - 1]))
       .then(publicUrl => ocr(publicUrl));
   } else if (ctx.message.text) {
-    promise.then(() => ctx.message.text);
+    promise = promise.then(() => ctx.message.text);
   }
 
   const { key, languageName } = getRandomLang();
   promise
+    .then(text => (console.log(text), text))
     .then(text => translate(encodeURIComponent(text), key))
     .then((res) => {
       let returnVal = '';
