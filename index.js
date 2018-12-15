@@ -75,7 +75,11 @@ bot.on('message', (ctx) => {
     })
     .then(sentence => sillyfier(sentence))
     .then((sentence) => {
-      ctx.reply(`Translated to ${languageName}: ${sentence}`);
+      if (languageName !== 'en') {
+        ctx.reply(`I dont speak english, but I do know ${languageName}: ${sentence}`);
+      } else {
+        ctx.reply(`Here's your translation: ${sentence}`);
+      }
     });
 });
 bot.startPolling();
