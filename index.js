@@ -51,15 +51,17 @@ bot.on('message', (ctx) => {
       .then(values => getExpressFileLink(values[values.length - 1]))
       .then(publicUrl => ocr(publicUrl));
   } else if (ctx.message.text) {
-    if (ctx.message.text === '/toggle') {
-      if (toggle === 1) {
-        toggle = 0;
-      } else {
-        toggle = 1;
-      }
-      ctx.reply('Bad translation toggled!');
+    if (ctx.message.text === '/superSillyMode') {
+      toggle = 1;
+      ctx.reply('Super Silly Mode ACTIVATED');
       return;
     }
+    if (ctx.message.text === '/goodBoiMode') {
+      toggle = 0;
+      ctx.reply('I will be a good boi now');
+      return;
+    }
+
     promise = promise.then(() => ctx.message.text);
   }
 
