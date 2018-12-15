@@ -29,7 +29,7 @@ if (tempBotToken) {
   bot = new Telegraf(process.env.BOT_TOKEN);
   telegram = new Telegram(process.env.BOT_TOKEN, []);
 }
-bot.start(ctx => ctx.reply('Hi! im a test bot!'));
+bot.start(ctx => ctx.reply('Hi! Ever felt translations were too good nowadays? Use me instead! Send me some images or text to translate!'));
 bot.help(ctx => ctx.reply('Send me some image or text to translate!'));
 bot.on('message', (ctx) => {
   if (Math.random() < toggle * 0.15) {
