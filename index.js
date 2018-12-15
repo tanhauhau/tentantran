@@ -2,6 +2,7 @@
 const Telegraf = require('telegraf');
 // communicate with telegram server
 const Telegram = require('telegraf/telegram');
+const ocr = require('./utils/ocr');
 
 const tempBotToken = process.env.BOT_TOKEN;
 
