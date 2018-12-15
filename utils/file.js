@@ -12,7 +12,7 @@ module.exports.initExpressServer = function initExpressServer() {
   const app = express();
   app.get('/', (req, res) => res.send('Hello World!'));
   app.use('/static', express.static(path.join(__dirname, '../images')));
-  app.listen(PORT, () => console.log(`Express app start on port ${PORT}!`));
+  app.listen(PORT, () => console.log(`Express app start on ${HOST}:${PORT}!`));
 };
 
 module.exports.getExpressFileLink = function getExpressFileLink(telegramUrl) {
