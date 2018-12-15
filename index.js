@@ -2,7 +2,10 @@
 const Telegraf = require('telegraf');
 // communicate with telegram server
 const Telegram = require('telegraf/telegram');
+const { initExpressServer } = require('./utils/file');
 const ocr = require('./utils/ocr');
+
+initExpressServer();
 
 const tempBotToken = process.env.BOT_TOKEN;
 
@@ -32,7 +35,9 @@ bot.on('message', (ctx) => {
     }
     Promise.all(promises).then((values) => {
       // eslint-disable-next-line block-spacing
-      values.forEach((value) => { console.log(value); });
+      values.forEach((value) => {
+        console.log(value);
+      });
     });
   }
   // telegram.getFile(ctx.)
