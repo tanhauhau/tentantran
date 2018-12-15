@@ -17,6 +17,9 @@ initExpressServer();
 const tempBotToken = process.env.BOT_TOKEN;
 
 console.log('telegram bot started');
+
+let toggle = 1;
+
 let bot;
 let telegram;
 if (tempBotToken) {
@@ -29,7 +32,7 @@ if (tempBotToken) {
 bot.start(ctx => ctx.reply('Hi! im a test bot!'));
 bot.help(ctx => ctx.reply('Send me some image or text to translate!'));
 bot.on('message', (ctx) => {
-  if (Math.random() < 0.15) {
+  if (Math.random() < toggle * 0.15) {
     ctx.reply(_.sample(replies.lazy));
     return;
   }
@@ -66,11 +69,18 @@ bot.on('message', (ctx) => {
       ctx.reply(`Translated to ${languageName}: ${sentence}`);
     });
 });
-bot.hears('hi', ctx => ctx.reply('Hey there'));
+bot.command('toggle', (ctx) => {
+  if (toggle === 1) {
+    toggle = 0;
+  } else {
+    toggle = 1;
+  }
+  ctx.reply('Bad translation toggled!');
+});
 bot.startPolling();
 
 const getRandomLang = () => {
-  if (Math.random() < 0.1) {
+  if (Math.random() < toggle * 0.1) {
     const languageKeys = Object.keys(languages);
     const randomIndex = Math.floor(Math.random() * (languageKeys.length - 1));
     return {
