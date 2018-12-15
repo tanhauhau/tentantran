@@ -37,7 +37,14 @@ bot.on('message', (ctx) => {
     Promise.all(promises)
       .then(values => getExpressFileLink(values[values.length - 1]))
       .then(publicUrl => ocr(publicUrl))
-      .then(text => console.log('text:', text));
+      .then(text => translate(encodeURIComponent(text), 'en'))
+      .then((res) => {
+        let returnVal = '';
+        res.forEach((item) => {
+          returnVal += `${item.translatedText}\n`;
+        });
+        ctx.reply(`Translated: ${returnVal}`);
+      });
   } else if (ctx.message.text) {
     translate(encodeURIComponent(ctx.message.text), 'en').then((res) => {
       let returnVal = '';
