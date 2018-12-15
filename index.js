@@ -36,6 +36,7 @@ bot.on('message', (ctx) => {
     ctx.reply(_.sample(replies.lazy));
     return;
   }
+  ctx.reply(_.sample(replies.loading));
 
   let promise = Promise.resolve();
 
