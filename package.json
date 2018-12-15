@@ -16,8 +16,11 @@
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
     "json-beautify": "^1.0.1",
+    "lodash": "^4.17.11",
     "node-fetch": "^2.3.0",
-    "telegraf": "^3.25.5"
+    "node-html-parser": "^1.1.11",
+    "telegraf": "^3.25.5",
+    "wordpos": "^1.2.0"
   },
   "devDependencies": {
     "eslint": "^5.10.0",
