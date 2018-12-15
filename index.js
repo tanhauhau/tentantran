@@ -6,6 +6,7 @@ const Telegraf = require('telegraf');
 const Telegram = require('telegraf/telegram');
 const { initExpressServer, getExpressFileLink } = require('./utils/file');
 const ocr = require('./utils/ocr');
+const translate = require('./utils/translate');
 
 initExpressServer();
 
@@ -23,9 +24,8 @@ if (tempBotToken) {
   bot = new Telegraf(process.env.BOT_TOKEN);
   telegram = new Telegram(process.env.BOT_TOKEN, []);
 }
-bot.start(ctx => ctx.reply('welcome'));
-bot.help(ctx => ctx.reply('Send me some image to translate!'));
-bot.on('sticker', ctx => ctx.reply('👍'));
+bot.start(ctx => ctx.reply('Hi! im a test bot!'));
+bot.help(ctx => ctx.reply('Send me some image or text to translate!'));
 bot.on('message', (ctx) => {
   const promises = [];
   if (ctx.message.photo) {
@@ -38,17 +38,15 @@ bot.on('message', (ctx) => {
       .then(values => getExpressFileLink(values[values.length - 1]))
       .then(publicUrl => ocr(publicUrl))
       .then(text => console.log('text:', text));
+  } else if (ctx.message.text) {
+    translate(encodeURIComponent(ctx.message.text), 'en').then((res) => {
+      let returnVal = '';
+      res.forEach((item) => {
+        returnVal += `${item.translatedText}\n`;
+      });
+      ctx.reply(`Translated: ${returnVal}`);
+    });
   }
-  // telegram.getFile(ctx.)
 });
 bot.hears('hi', ctx => ctx.reply('Hey there'));
 bot.startPolling();
-
-// // bluebird each polyfill
-// Promise.each = (arr, fn) => { // take an array and a function
-//   // invalid input
-//   if (!Array.isArray(arr)) return Promise.reject(new Error('Non array passed to each'));
-//   // empty case
-//   if (arr.length === 0) return Promise.resolve();
-//   return arr.reduce((prev, cur) => prev.then(() => fn(cur)), Promise.resolve());
-// };
