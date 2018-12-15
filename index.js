@@ -11,6 +11,7 @@ const translate = require('./utils/translate');
 const sillyfier = require('./utils/sillyfier');
 const languages = require('./utils/languages');
 const replies = require('./utils/replies');
+const timebombSetup = require('./utils/timebomb');
 
 initExpressServer();
 
@@ -29,18 +30,25 @@ if (tempBotToken) {
   bot = new Telegraf(process.env.BOT_TOKEN);
   telegram = new Telegram(process.env.BOT_TOKEN, []);
 }
-bot.start(ctx => ctx.reply('Hi! Ever felt translations were too good nowadays? Use me instead! Send me some images or text to translate!'));
+
+const delayTimebomb = timebombSetup(telegram);
+
+bot.start(ctx => ctx.reply(
+  'Hi! Ever felt translations were too good nowadays? Use me instead! Send me some images or text to translate!',
+));
 bot.help(ctx => ctx.reply('Send me some image or text to translate!'));
 bot.on('message', (ctx) => {
+  delayTimebomb(ctx.chat);
+
   if (Math.random() < toggle * 0.15) {
     ctx.reply(_.sample(replies.lazy));
     return;
   }
-  ctx.reply(_.sample(replies.loading));
 
   let promise = Promise.resolve();
 
   if (ctx.message.photo) {
+    ctx.reply(_.sample(replies.loading));
     const promises = [];
     const photos = ctx.message.photo;
     for (let i = 0; i < photos.length; i += 1) {
