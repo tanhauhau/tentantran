@@ -15,6 +15,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
+    "json-beautify": "^1.0.1",
     "node-fetch": "^2.3.0",
     "telegraf": "^3.25.5"
   },

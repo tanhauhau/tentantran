@@ -1,9 +1,10 @@
 const fetch = require('node-fetch');
+const beautify = require('json-beautify');
 
 function debug(imageUri, res) {
   try {
     console.log(imageUri);
-    console.log(res);
+    console.log(beautify(res, null, 2, 100));
     for (const response of res.responses) {
       console.log(response.fullTextAnnotation.text);
     }

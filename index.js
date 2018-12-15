@@ -1,3 +1,5 @@
+require('dotenv').load();
+
 // communicate with user
 const Telegraf = require('telegraf');
 // communicate with telegram server
@@ -9,7 +11,6 @@ initExpressServer();
 
 const tempBotToken = process.env.BOT_TOKEN;
 
-require('dotenv').load();
 
 console.log('telegram bot started');
 
